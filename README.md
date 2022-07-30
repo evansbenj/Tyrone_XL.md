@@ -14,4 +14,9 @@ I'm using ANGSD to calculate individual polymorphism.  I began by making a bamfi
 3733/3733_DNA_S125_L004_trim_sorted.bam_rg.bam
 LG_3_1/LG_3_1_DNA_S126_L004_trim_sorted.bam_rg.bam
 ```
-The first 4 individuals are two male and female ZZ individuals that produce ~50% sex reversed offspring.
+The first 4 individuals are two male and female ZZ individuals that produce ~50% sex reversed offspring. Then I'm using angsd to calculate polymorphism stats:
+
+```
+module load angsd/0.936
+./angsd -bam bamfilelist -doSaf 1 -anc ../../XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa -GL 1 -out out
+```
