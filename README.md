@@ -14,9 +14,12 @@ I'm using ANGSD to calculate individual polymorphism.  I began by making a bamfi
 3733/3733_DNA_S125_L004_trim_sorted.bam_rg.bam
 LG_3_1/LG_3_1_DNA_S126_L004_trim_sorted.bam_rg.bam
 ```
-The first 4 individuals are two male and female ZZ individuals that produce ~50% sex reversed offspring. Then I'm using angsd to calculate polymorphism stats:
+The first 4 individuals are two male and female ZZ individuals that produce ~50% sex reversed offspring. Then I'm using angsd to calculate polymorphism stats as detailed here (http://popgen.dk/angsd/index.php/Thetas,Tajima,Neutrality_tests#Full_command_list_for_below_examples):
 
 ```
 module load angsd/0.936
 ./angsd -bam bamfilelist -doSaf 1 -anc ../../XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa -GL 1 -out out
+realSFS out.saf.idx -P 24 -fold 1 > out.sfs
+thetaStat do_stat out.thetas.idx
+thetaStat do_stat out.thetas.idx -win 50000 -step 10000  -outnames theta.thetasWindow.gz
 ```
