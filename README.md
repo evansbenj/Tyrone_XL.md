@@ -6,7 +6,7 @@ After trimming with trimmomatic, I mapped WGS data from 5 individuals to the XL 
 
 # genome file
 ```
-/home/ben/projects/rrg-ben/ben/XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa
 ```
 
 # Individual polymorphism
