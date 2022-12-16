@@ -68,3 +68,37 @@ p ${file::-5}cut.R2.fq ${file::-5}R1.fq ${file::-5}R2.fq
 done 
 ```
 # Trimmomatic
+```
+#!/bin/sh
+#SBATCH --job-name=trimmomatic
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=36:00:00
+#SBATCH --mem=8gb
+#SBATCH --output=trimmomatic.%J.out
+#SBATCH --error=trimmomatic.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this
+# sbatch ./2020_trimmomatic.sh ../raw_data/plate1
+
+
+module load StdEnv/2020
+module load trimmomatic/0.39
+
+#v=1
+#  Always use for-loop, prefix glob, check if exists file.
+for file in $1/*_cut.R1.fq ; do         # Use ./* ... NEVER bare *
+  if [ -e "$file" ] ; then   # Check whether file exists.
+  	#if [[ $v -eq 1 ]]
+	#then # if/then branch
+	java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar PE ${file::-10}_cut.R1.fq ${file::-10}_cut.R2.
+fq ${file::-10}_cuttrim.R1.fq.gz ${file::-10}_cuttrim.R1_single.fq.gz ${file::-10}_cuttrim.R2.fq.gz ${fi
+le::-10}_cuttrim.R2_single.fq.gz SLIDINGWINDOW:4:15 MINLEN:36 HEADCROP:3
+	#	  v=0
+	#else # else branch
+  	#	v=1
+	#fi
+  fi
+done 
+```
