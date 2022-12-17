@@ -108,3 +108,9 @@ done
 /home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/raw_data/cuttrim
 ```
 
+# Ref genome
+```
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa
+```
+
+
