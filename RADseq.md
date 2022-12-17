@@ -112,5 +112,40 @@ done
 ```
 /home/ben/projects/rrg-ben/ben/2022_Tyrone/XL_v10_concatscaf/XL_v10.1_concatenatedscaffolds.fa
 ```
+# Align to ref with concatenated scaffolds
+```
+#!/bin/sh
+#SBATCH --job-name=bwa_align
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=24:00:00
+#SBATCH --mem=32gb
+#SBATCH --output=bwa_align.%J.out
+#SBATCH --error=bwa_align.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this (in the directory with the files)
+# sbatch 2020_align_paired_fq_to_ref.sh pathandname_of_ref path_to_paired_fq_filez
+# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2018_Austin_XB_genome/Austin_geno
+me/Xbo.v1.fa.gz pathtofqfilez
+# or for XL genome use:
+# sbatch 2020_align_paired_fq_to_ref.sh /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_
+genome.fa.gz pathtofqfilez
+
+module load bwa/0.7.17
+module load samtools/1.10
+
+
+for file in ${2}/*.R1.fq.gz ; do         # Use ./* ... NEVER bare *    
+    if [ -e "$file" ] ; then   # Check whether file exists.
+	#${file::-9}
+	echo bwa mem ${1} ${file::-9}.R1.fq.gz ${file::-9}.R2.fq.gz -t 16 | samtools view -Shu - | samto
+ols sort - -o ${file::-9}_sorted.bam
+	bwa mem ${1} ${file::-9}.R1.fq.gz ${file::-9}.R2.fq.gz -t 16 | samtools view -Shu - | samtools s
+ort - -o ${file::-9}_sorted.bam
+	samtools index ${file::-9}_sorted.bam
+  fi
+done
+```
 
 
