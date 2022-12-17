@@ -102,3 +102,9 @@ le::-10}_cuttrim.R2_single.fq.gz SLIDINGWINDOW:4:15 MINLEN:36 HEADCROP:3
   fi
 done 
 ```
+
+# Cuttrim fq files
+```
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/raw_data/cuttrim
+```
+
