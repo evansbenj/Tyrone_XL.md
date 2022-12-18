@@ -148,4 +148,36 @@ ort - -o ${file::-9}_sorted.bam
 done
 ```
 
+# Add readgroups and index bam
+```
+#!/bin/sh
+#SBATCH --job-name=readgroups
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=24:00:00
+#SBATCH --mem=8gb
+#SBATCH --output=readgroups.%J.out
+#SBATCH --error=readgroups.%J.err
+#SBATCH --account=def-ben
+
+# run by passing an argument like this
+# sbatch ./2021_picard_add_read_groups.sh /home/ben/projects/rrg-ben/ben/2020_GBS_muel_fish_allo_cliv_la
+ev/raw_data/cutaddapted_by_species_across_three_plates/clivii/ 
+
+module load picard/2.23.3
+
+for file in ${1}*_sorted.bam
+do
+    java -jar $EBROOTPICARD/picard.jar AddOrReplaceReadGroups I=${file} O=${file}_rg.bam RGID=4 RGLB=$(b
+asename $file) RGPL=ILLUMINA RGPU=$(basename $file) RGSM=$(basename $file)
+done
+
+module load StdEnv/2020 samtools/1.12
+
+
+for file in ${1}*_sorted.bam_rg.bam
+do
+    samtools index ${file}
+done
+```
 
