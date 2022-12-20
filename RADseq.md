@@ -181,3 +181,31 @@ do
 done
 ```
 
+# Call genotypes on each bam file
+```
+#!/bin/sh
+#SBATCH --job-name=HaplotypeCaller
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=96:00:00
+#SBATCH --mem=30gb
+#SBATCH --output=HaplotypeCaller.%J.out
+#SBATCH --error=HaplotypeCaller.%J.err
+#SBATCH --account=def-ben
+
+
+# This script will read in the *_sorted.bam file names in a directory, and 
+# make and execute the GATK command "RealignerTargetCreator" on these files. 
+
+# execute like this:
+# sbatch 2021_HaplotypeCaller.sh /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa /home/ben/projec
+ts/rrg-ben/ben/2020_GBS_muel_fish_allo_cliv_laev/raw_data/cutaddapted_by_species_across_three_plates/clivii/ 
+
+module load nixpkgs/16.09 gatk/4.1.0.0
+
+for file in ${2}*_sorted.bam_rg.bam
+do
+    gatk --java-options -Xmx24G HaplotypeCaller  -I ${file} -R ${1} -O ${file}.g.vcf -ERC GVCF
+done
+```
+
