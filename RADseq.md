@@ -510,13 +510,31 @@ unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
 
 # Check coverage of high association positions
 ```
-[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '77572949' | grep -o '\./\.' | wc -l
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '86544856' | grep -o '\./\.' | wc -l
+50
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544856' | grep -o '\./\.' | wc -l
+25
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       77572949' | grep -o '\./\.' | wc -l
 53
-[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '98706723' | grep -o '\./\.' | wc -l
-115 (this is not correct)
-[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '76155133' | grep -o '\./\.' | wc -l
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       98706723' | grep -o '\./\.' | wc -l
+4
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       76155133' | grep -o '\./\.' | wc -l
 23
-[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '76155153' | grep -o '\./\.' | wc -l
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       76155153' | grep -o '\./\.' | wc -l
+23
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       98706729' | grep -o '\./\.' | wc -l
+0
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544856' | grep -o '\./\.' | wc -l
+25
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544934' | grep -o '\./\.' | wc -l
+25
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544858' | grep -o '\./\.' | wc -l
+25
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       82039480' | grep -o '\./\.' | wc -l
+2
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       37987413' | grep -o '\./\.' | wc -l
+31
+[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       37987397' | grep -o '\./\.' | wc -l
 23
 ```
 
