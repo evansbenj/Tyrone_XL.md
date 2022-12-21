@@ -269,3 +269,22 @@ commandline="gatk --java-options -Xmx18G GenotypeGVCFs -R ${1} -V gendb://${2}_$
 ${commandline}
 ```
 
+# Test for phenotypic associations with Plink
+
+## Concatenate vcf files
+```
+module load StdEnv/2020  gcc/9.3.0 bcftools/1.13
+
+bcftools concat DB_Chr1L_Chr1L_out.vcf DB_Chr1S_Chr1S_out.vcf DB_Chr2L_Chr2L_out.vcf DB_Chr2S_Chr2S_out.vcf DB_Chr3L_Chr3L_out.vcf DB_Chr3S_Chr3S_out.vcf DB_Chr4L_Chr4L_out.vcf DB_Chr4S_Chr4S_out.vcf DB_Chr5L_Chr5L_out.vcf DB_Chr5S_Chr5S_out.vcf DB_Chr6L_Chr6L_out.vcf DB_Chr6S_Chr6S_out.vcf DB_Chr7L_Chr7L_out.vcf DB_Chr7S_Chr7S_out.vcf DB_Chr8L_Chr8L_out.vcf DB_Chr8S_Chr8S_out.vcf DB_Chr9_10L_Chr9_10L_out.vcf DB_Chr9_10S_Chr9_10S_out.vcf DB_Scaffolds_Scaffolds_out.vcf -O z -o TyroneRADseq_unfiltered_allChrs.vcf.gz
+```
+## run plink
+```
+module load nixpkgs/16.09 plink/1.9b_5.2-x86_64
+
+plink --vcf TyroneRADseq_unfiltered_allChrs.vcf.gz --recode --const-fid 0 --chr-set 37 no-y no-xy no-mt --allow-extra-chr --out TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink
+
+plink --file TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink --pheno sex_phenotype --assoc --allow-no-sex --allow-extra-chr
+
+mv plink.assoc TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink.assoc
+```
+
