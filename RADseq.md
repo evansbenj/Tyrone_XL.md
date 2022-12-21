@@ -288,3 +288,223 @@ plink --file TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink --pheno sex_phenotyp
 mv plink.assoc TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink.assoc
 ```
 
+# Plot and interpret results
+```R
+setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2022_Tyrone/plink")
+library(ggplot2)
+dat <-read.table("TyroneRADseq_unfiltered_allChrs.vcf.gz_myplink.assoc", header=TRUE)
+
+#newdat <- dat[!is.na(dat$P),]
+pdf("./unfiltered_mappedtoXL_plink_assoc_long.pdf",w=8, h=24.0, version="1.4", bg="transparent")
+p<-ggplot(dat, aes(x=BP, y=-log10(P))) + 
+    # add points
+    geom_point(size=2, alpha = 0.7 ) +
+    # color the stuff the way I want
+    facet_wrap(~CHR, ncol = 1) +
+    # get rid of gray background
+    theme_bw()
+p
+dev.off()
+
+
+
+# get top ten max -logP values
+# make a -logP column
+dat$minuslogP <- -log10(dat$P)
+# reverse sort the df by -logP
+head(dat[order(-dat$minuslogP),],n=20)
+
+# get a specific region
+subset<-dat[(dat$CHR == 'Chr5L'),]
+
+# get a specific region (for allofraseri)
+#subset<-dat[(dat$CHR == 'chr7L')&(dat$BP >= 14368095)&(dat$BP <= 33688731),]
+
+# plot it
+p<-ggplot(subset, aes(x=BP, y=-log10(P))) + 
+    # add points
+    geom_point(size=2, alpha = 0.7 ) +
+    # get rid of gray background
+    theme_bw()
+p
+
+pdf("./Chr5L_closeup.pdf",w=8, h=4.0, version="1.4", bg="transparent")
+    p
+dev.off()    
+
+
+
+################################################
+#
+#
+#  Deterine which RADseq SNPs are in exons
+#
+#
+################################################
+
+
+#BiocManager::install("genomation")
+#library(genomation)
+library("GenomicRanges")
+library(genomation)
+#setwd("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2022_GBS_lotsof_Xennies/plink_somemappedtoXLv9.2_othersmappedtoAustinXB")
+# read in the data from plink output
+#dat <-read.table("pygmaeus_filtered_removed_allchrs.vcf.gz_plink_noNAs.assoc", header=TRUE)
+# make a -logP column
+dat$minuslogP <- -log10(dat$P)
+# reverse sort the df by -logP
+head(dat[order(-dat$minuslogP),],n=20)
+
+
+gff <- gffToGRanges("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2022_GBS_lotsof_Xennies/plink_somemappedtoXLv9.2_othersmappedtoAustinXB/XENLA_9.2_Xenbase.gtf", filter = NULL, zero.based = FALSE, ensembl = FALSE)
+
+# Get rid of rows with NA for P value
+dat_NoNAs <- dat[!is.na(dat$minuslogP),]
+
+# get the RADseq SNPs that have a strong bias
+subset<-dat_NoNAs[(dat_NoNAs$CHR == 'Chr5L')&(dat_NoNAs$minuslogP >= 6),];subset
+dim(subset)
+# subset gtf and keep only the ranges exons in chr8L that are exons
+Chr5L_exons <- gff %>% subset(seqnames == 'Chr5L') %>% subset(type == 'exon')
+# make a GenomicRanges object from the RADseq SNPs
+SL_sites <- makeGRangesFromDataFrame(subset,
+                                     keep.extra.columns=FALSE,
+                                     ignore.strand=FALSE,
+                                     seqinfo=NULL,
+                                     seqnames.field=c("seqnames", "seqname",
+                                                      "chromosome", "chrom",
+                                                      "chr", "chromosome_name",
+                                                      "seqid"),
+                                     start.field="BP",
+                                     end.field=c("BP"),
+                                     strand.field="strand",
+                                     starts.in.df.are.0based=FALSE)
+
+o = findOverlaps(SL_sites,Chr5L_exons);o
+SL_sites = split(SL_sites[queryHits(o)], 1:length(o)) # You can't mendoapply on a GRanges object
+Chr5L_exons = split(chr8L_exons[subjectHits(o)], 1:length(o))
+foo = function(x, y) {
+    rv = x
+    start(rv) = max(start(x), start(y))
+    end(rv) = min(end(x), end(y))
+    return(rv)
+}
+unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################
+#
+#
+#  Deterine which RADseq SNPs are in exons
+#
+#
+################################################
+
+
+# reverse sort the df by -logP
+head(dat[order(-dat$minuslogP),],n=20)
+
+
+library("GenomicRanges")
+library(genomation)
+#makeGRangesFromGFF(
+#    "XENLA_9.2_Xenbase.gtf",
+#    level = c("genes", "transcripts"),
+#    ignoreVersion = TRUE,
+#    synonyms = FALSE
+#)
+#BiocManager::install("genomation")
+#library(genomation)
+
+gff <- gffToGRanges("/Users/Shared/Previously\ Relocated\ Items/Security/projects/2022_GBS_lotsof_Xennies/plink_somemappedtoXLv9.2_othersmappedtoAustinXB/XENLA_9.2_Xenbase.gtf", filter = NULL, zero.based = FALSE, ensembl = FALSE)
+
+
+# get the RADseq SNPs that have a strong bias
+subset<-dat[(dat$CHR == 'Chr5L')&(dat$minuslogP >= 6),];subset
+    
+dim(subset)
+# subset gtf and keep only the ranges exons in chr8L that are exons
+chr8L_exons <- gff %>% subset(seqnames == 'chr8L') %>% subset(type == 'exon')
+# make a GenomicRanges object from the RADseq SNPs
+SL_sites <- makeGRangesFromDataFrame(subset,
+                         keep.extra.columns=FALSE,
+                         ignore.strand=FALSE,
+                         seqinfo=NULL,
+                         seqnames.field=c("seqnames", "seqname",
+                                          "chromosome", "chrom",
+                                          "chr", "chromosome_name",
+                                          "seqid"),
+                         start.field="BP",
+                         end.field=c("BP"),
+                         strand.field="strand",
+                         starts.in.df.are.0based=FALSE)
+
+o = findOverlaps(SL_sites,chr8L_exons);o
+SL_sites = split(SL_sites[queryHits(o)], 1:length(o)) # You can't mendoapply on a GRanges object
+chr8L_exons = split(chr8L_exons[subjectHits(o)], 1:length(o))
+foo = function(x, y) {
+    rv = x
+    start(rv) = max(start(x), start(y))
+    end(rv) = min(end(x), end(y))
+    return(rv)
+}
+unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
+
+
+
+
+
+
+#grhits=intersect(SL_sites,chr8L_exons);grhits
+
+# test df
+chr <- rep("chr8L",2);chr
+begin <- c(1,49869)
+end <- c(1,49869)
+test_df<- data.frame(chr, begin, end)
+SL_sites <- makeGRangesFromDataFrame(test_df,
+                                     keep.extra.columns=FALSE,
+                                     ignore.strand=FALSE,
+                                     seqinfo=NULL,
+                                     seqnames.field=c("seqnames", "seqname",
+                                                      "chromosome", "chrom",
+                                                      "chr", "chromosome_name",
+                                                      "seqid"),
+                                     start.field="begin",
+                                     end.field=c("end"),
+                                     strand.field="strand",
+                                     starts.in.df.are.0based=FALSE)
+
+#grhits=intersect(SL_sites,chr8L_exons);grhits
+o = findOverlaps(SL_sites,chr8L_exons);o
+SL_sites = split(SL_sites[queryHits(o)], 1:length(o)) # You can't mendoapply on a GRanges object
+chr8L_exons = split(chr8L_exons[subjectHits(o)], 1:length(o))
+foo = function(x, y) {
+         rv = x
+         start(rv) = max(start(x), start(y))
+         end(rv) = min(end(x), end(y))
+         return(rv)
+     }
+unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
+
+```
+
