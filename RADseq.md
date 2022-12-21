@@ -209,3 +209,41 @@ do
 done
 ```
 
+# Use Genomics DB to combine vcf files
+```
+#!/bin/sh
+#SBATCH --job-name=GenomicsDBImport
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=60:00:00
+#SBATCH --mem=24gb
+#SBATCH --output=GenomicsDBImport.%J.out
+#SBATCH --error=GenomicsDBImport.%J.err
+#SBATCH --account=def-ben
+
+
+# This script will read in the *.g.vcf file names in a directory, and 
+# make and execute the GATK command "GenotypeGVCFs" on these files. 
+
+# execute like this:
+# sbatch 2021_GenomicsDBImport.sh /home/ben/projects/rrg-ben/ben/2020_XL_v9.2_refgenome/XENLA_9.2_genome.fa /home/ben/proje
+cts/rrg-ben/ben/2020_GBS_muel_fish_allo_cliv_laev/raw_data/cutaddapted_by_species_across_three_plates/clivii/vcf/ chr1L tem
+p_path_and_dir db_path_and_dir_prefix
+
+module load nixpkgs/16.09 gatk/4.1.0.0
+
+commandline="gatk --java-options -Xmx20G GenomicsDBImport -R ${1}"
+for file in ${2}*g.vcf
+do
+    commandline+=" -V ${file}"
+done
+
+commandline+=" -L ${3} --tmp-dir=${4} --batch-size 50 --genomicsdb-workspace-path ${5}_${3}"
+
+${commandline}
+```
+
+# GenotypeGVCFs
+```
+```
+
