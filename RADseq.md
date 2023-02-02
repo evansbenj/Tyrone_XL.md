@@ -113,6 +113,10 @@ done
 ```
 /home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/raw_data/cuttrim
 ```
+new ones from both runs concatenated:
+```
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/raw_data_2/original_data_file/run1_run2_rawdata_concatenated/cuttrim
+```
 
 # Ref genome
 ```
