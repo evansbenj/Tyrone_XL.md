@@ -3,6 +3,12 @@
 /home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq
 ```
 
+update: I am redoing everything using concatenated files as a starting point.  I then demultiplexed them and did the same steps. The new concatenated data are here:
+
+```
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/raw_data_2/original_data_file/run1_run2_rawdata_concatenated/cut
+```
+
 # Demultiplex with sabre
 
 ```
