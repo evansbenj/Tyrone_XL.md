@@ -520,8 +520,6 @@ unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
 
 # Check coverage of high association positions
 ```
-[ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L' | grep '86544856' | grep -o '\./\.' | wc -l
-50
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544856' | grep -o '\./\.' | wc -l
 25
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       77572949' | grep -o '\./\.' | wc -l
