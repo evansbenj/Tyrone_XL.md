@@ -521,29 +521,29 @@ unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
 # Check coverage of high association positions
 ```
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544856' | grep -o '\./\.' | wc -l
-25
+25 or 21 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       77572949' | grep -o '\./\.' | wc -l
-53
+53 or 4 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       98706723' | grep -o '\./\.' | wc -l
-4
+4 or 1 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       76155133' | grep -o '\./\.' | wc -l
-23
+23 or 15 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       76155153' | grep -o '\./\.' | wc -l
-23
+23 or 14 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       98706729' | grep -o '\./\.' | wc -l
-0
+0 or 0 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544856' | grep -o '\./\.' | wc -l
-25
+25 or 21 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544934' | grep -o '\./\.' | wc -l
-25
+25 or 22 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       86544858' | grep -o '\./\.' | wc -l
-25
+25 or 23 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       82039480' | grep -o '\./\.' | wc -l
-2
+2 or 0 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       37987413' | grep -o '\./\.' | wc -l
-31
+31 or 0 (combined)
 [ben@gra-login3 combined_vcfs]$ zcat TyroneRADseq_unfiltered_allChrs.vcf.gz | grep 'Chr5L       37987397' | grep -o '\./\.' | wc -l
-23
+23 or 0 (combined)
 ```
 
 
