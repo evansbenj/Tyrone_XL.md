@@ -546,4 +546,7 @@ unlist(mendoapply(foo, SL_sites, y=chr8L_exons))
 23 or 0 (combined)
 ```
 
+# Next Steps
 
+* Look at variation in depth of coverage using WGS data
+* Use RADsex to identify sex-linked RADtags
