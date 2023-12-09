@@ -1,5 +1,11 @@
 # MatPat analysis
 
+The combined files for each family are now here:
+```
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/RADseq_and_WGS_combined/family1
+/home/ben/projects/rrg-ben/ben/2022_Tyrone/RADseq/RADseq_and_WGS_combined/family2
+```
+
 I'd like to explore the association signals of maternal and paternal sites separately. To do this I need to combine the WGS data (from the parents) with the RADseq data (from the offspring).
 
 After running haplotype caller, I used GenomicsDB to merge the files, and then GenotypeGVCFs to genotype them. Then I used SelectVariants and VariantFiltration to filter them
